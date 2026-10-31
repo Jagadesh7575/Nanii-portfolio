@@ -1,0 +1,157 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-white: #FFFFFF;
+  --color-off-white: #FAFAFA;
+  --color-pearl: #F7F8FA;
+  --color-cloud: #F0F1F3;
+  --color-border: #E3E5E8;
+  --color-silver-light: #DFE2E6;
+  --color-silver: #C2C7CE;
+  --color-steel: #8C939D;
+  --color-muted: #747B85;
+  --color-heading: #111318;
+  --color-body: #626974;
+  --color-subtle-text: #8A9099;
+  --color-graphite: #292D33;
+  --color-charcoal: #17191E;
+  --color-black: #0B0C0F;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-white);
+    color: var(--color-heading);
+    font-family: 'Inter', sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Custom Glass & Chrome Utilities */
+.glass-panel {
+  background: rgba(23, 25, 30, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.glass-card-light {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(227, 229, 232, 0.8);
+}
+
+.metallic-ring-gradient {
+  background: conic-gradient(
+    from 180deg at 50% 50%,
+    #FFFFFF 0deg,
+    #DFE2E6 45deg,
+    #8C939D 90deg,
+    #FFFFFF 135deg,
+    #43484F 180deg,
+    #DFE2E6 225deg,
+    #8C939D 270deg,
+    #FFFFFF 360deg
+  );
+}
+
+.chrome-sphere-glow {
+  background: radial-gradient(circle at 35% 35%, #FFFFFF 0%, #D8DCE2 25%, #6A727D 60%, #1A1D22 100%);
+  box-shadow: inset -4px -4px 8px rgba(0,0,0,0.6), inset 3px 3px 6px rgba(255,255,255,0.8), 0 10px 20px rgba(0,0,0,0.25);
+}
+
+.text-gradient-silver {
+  background: linear-gradient(180deg, #FFFFFF 0%, #C2C7CE 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Hide scrollbar for carousel tracks while preserving scroll */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes float-gentle {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+.animate-float-slow {
+  animation: float-gentle 6s ease-in-out infinite;
+}
+
+/* Cinematic Reveal on Scroll Transitions */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 {
+  transition-delay: 0.1s;
+}
+.reveal-delay-2 {
+  transition-delay: 0.2s;
+}
+.reveal-delay-3 {
+  transition-delay: 0.3s;
+}
+.reveal-delay-4 {
+  transition-delay: 0.4s;
+}
+
+.reveal-mask {
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-mask.is-revealed {
+  clip-path: inset(0 0 0 0);
+}
+
+.animate-float-reverse {
+  animation: float-gentle 7s ease-in-out 1s infinite reverse;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal-on-scroll,
+  .reveal-mask {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
+}
+

@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 850" width="1200" height="850">
+  <defs>
+    <linearGradient id="bg_nptel" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F8FAFC" />
+      <stop offset="100%" stop-color="#EDF2F7" />
+    </linearGradient>
+    <linearGradient id="red_grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#991B1B" />
+      <stop offset="100%" stop-color="#7F1D1D" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="1200" height="850" fill="url(#bg_nptel)" />
+  <rect x="25" y="25" width="1150" height="800" fill="none" stroke="#E2E8F0" stroke-width="2" rx="10" />
+  <rect x="40" y="40" width="1120" height="770" fill="none" stroke="#7F1D1D" stroke-width="1.5" rx="6" />
+  
+  <!-- Banner -->
+  <rect x="40" y="40" width="1120" height="110" fill="url(#red_grad)" />
+  <text x="600" y="85" font-family="'Outfit', 'Inter', sans-serif" font-size="22" font-weight="800" fill="#FFFFFF" text-anchor="middle" letter-spacing="3">
+    NATIONAL PROGRAMME ON TECHNOLOGY ENHANCED LEARNING
+  </text>
+  <text x="600" y="120" font-family="'Inter', sans-serif" font-size="14" font-weight="600" fill="#FECACA" text-anchor="middle" letter-spacing="2">
+    SWAYAM • MINISTRY OF EDUCATION, GOVT. OF INDIA
+  </text>
+  
+  <!-- Certificate Type -->
+  <text x="600" y="210" font-family="'Outfit', 'Inter', sans-serif" font-size="34" font-weight="900" fill="#0F172A" text-anchor="middle">
+    EXAMINATION &amp; COURSE CREDENTIAL
+  </text>
+  <text x="600" y="245" font-family="'Inter', sans-serif" font-size="15" font-weight="500" fill="#64748B" text-anchor="middle">
+    OFFICIAL NPTEL EXAMINATION CANDIDATE
+  </text>
+  
+  <!-- Name -->
+  <text x="600" y="325" font-family="'Outfit', 'Inter', sans-serif" font-size="46" font-weight="900" fill="#7F1D1D" text-anchor="middle">
+    Saanikommu Jagadeshwar Reddy
+  </text>
+  <line x1="320" y1="350" x2="880" y2="350" stroke="#CBD5E1" stroke-width="2" />
+  
+  <!-- Course -->
+  <text x="600" y="400" font-family="'Inter', sans-serif" font-size="18" fill="#475569" text-anchor="middle">
+    has completed the curriculum and registered for the National Examination in:
+  </text>
+  <text x="600" y="450" font-family="'Outfit', 'Inter', sans-serif" font-size="32" font-weight="800" fill="#0F172A" text-anchor="middle">
+    Privacy and Security in Online Social Media
+  </text>
+  
+  <!-- Table Details -->
+  <rect x="200" y="500" width="800" height="170" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+  
+  <text x="240" y="540" font-family="'Inter', sans-serif" font-size="14" font-weight="700" fill="#334155">EXAMINATION DATE:</text>
+  <text x="440" y="540" font-family="'Inter', sans-serif" font-size="14" fill="#0F172A">24 October 2026 (Afternoon Session)</text>
+  
+  <text x="240" y="580" font-family="'Inter', sans-serif" font-size="14" font-weight="700" fill="#334155">EXAM CENTRE:</text>
+  <text x="440" y="580" font-family="'Inter', sans-serif" font-size="14" fill="#0F172A">iON Digital Zone iDZ Perecherla, Guntur</text>
+  
+  <text x="240" y="620" font-family="'Inter', sans-serif" font-size="14" font-weight="700" fill="#334155">ACADEMIC VENUE:</text>
+  <text x="440" y="620" font-family="'Inter', sans-serif" font-size="14" fill="#0F172A">Universal College of Engineering and Technology</text>
+  
+  <text x="240" y="650" font-family="'Inter', sans-serif" font-size="12" font-weight="600" fill="#64748B">HALL TICKET REF:</text>
+  <text x="440" y="650" font-family="'Inter', sans-serif" font-size="12" font-family="'JetBrains Mono', monospace" fill="#7F1D1D">HT-ZXZN-PHZR-38PRV</text>
+  
+  <!-- Seal / Footer -->
+  <circle cx="600" cy="740" r="28" fill="#FEE2E2" stroke="#7F1D1D" stroke-width="2" />
+  <text x="600" y="745" font-family="'Outfit', sans-serif" font-size="11" font-weight="800" fill="#7F1D1D" text-anchor="middle">NPTEL</text>
+  
+  <text x="600" y="790" font-family="'Inter', sans-serif" font-size="12" fill="#64748B" text-anchor="middle">
+    IIT Madras • SWAYAM • Online Academic Verification
+  </text>
+</svg>
