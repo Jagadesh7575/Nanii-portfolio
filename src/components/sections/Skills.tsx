@@ -34,37 +34,36 @@ export const Skills: React.FC = () => {
     const sec = sectionRef.current;
     if (!sec) return;
 
-    // Header reveal
+    // Header reveal with continuous scrub
     gsap.fromTo(sec.querySelectorAll('.skills-header-item'),
-      { y: 20, opacity: 0 },
+      { y: 30, opacity: 0.2 },
       {
         y: 0,
         opacity: 1,
-        duration: 0.65,
         stagger: 0.08,
-        ease: "power2.out",
+        ease: "power1.out",
         scrollTrigger: {
           trigger: sec,
           start: "top 90%",
-          once: true
+          end: "top 60%",
+          scrub: 0.6
         }
       }
     );
 
-    // 6 Category cards staggered entrance
+    // 6 Category cards staggered entrance with scroll-linked scrub
     gsap.fromTo(sec.querySelectorAll('.skill-card-item'),
-      { y: 28, opacity: 0 },
+      { y: 50, opacity: 0.2 },
       {
         y: 0,
         opacity: 1,
-        duration: 0.65,
-        stagger: 0.08,
-        ease: "power2.out",
-        clearProps: "all",
+        stagger: 0.1,
+        ease: "power1.out",
         scrollTrigger: {
           trigger: sec,
-          start: "top 85%",
-          once: true
+          start: "top 80%",
+          end: "top 35%",
+          scrub: 0.8
         }
       }
     );

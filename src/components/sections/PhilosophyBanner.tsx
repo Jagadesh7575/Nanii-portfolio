@@ -38,20 +38,19 @@ export const PhilosophyBanner: React.FC = () => {
     const banner = bannerRef.current;
     if (!banner) return;
 
-    // Pillar items reveal with clearProps to avoid stuck states
+    // Scroll-linked continuous pillar items reveal
     gsap.fromTo(banner.querySelectorAll('.pillar-item'),
-      { y: 22, opacity: 0 },
+      { y: 35, opacity: 0.2 },
       {
         y: 0,
         opacity: 1,
         stagger: 0.08,
-        duration: 0.65,
-        ease: "power2.out",
-        clearProps: "all",
+        ease: "power1.out",
         scrollTrigger: {
           trigger: banner,
-          start: "top 85%",
-          once: true
+          start: "top 88%",
+          end: "top 45%",
+          scrub: 0.6
         }
       }
     );

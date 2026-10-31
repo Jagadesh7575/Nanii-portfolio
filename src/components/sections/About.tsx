@@ -17,87 +17,87 @@ export const About: React.FC = () => {
     const sec = sectionRef.current;
     if (!sec) return;
 
-    // Header reveal
+    // Header reveal with scroll-driven scrub
     gsap.fromTo(sec.querySelectorAll('.about-header-item'),
-      { y: 24, opacity: 0 },
+      { y: 30, opacity: 0.2 },
       {
         y: 0,
         opacity: 1,
-        duration: 0.7,
         stagger: 0.08,
-        ease: "power2.out",
+        ease: "power1.out",
         scrollTrigger: {
           trigger: sec,
           start: "top 90%",
-          once: true
+          end: "top 60%",
+          scrub: 0.6
         }
       }
     );
 
     // Portrait card reveal
     gsap.fromTo(sec.querySelector('.about-portrait-card'),
-      { y: 30, opacity: 0 },
+      { y: 60, opacity: 0.3 },
       {
         y: 0,
         opacity: 1,
-        duration: 0.8,
-        ease: "power2.out",
-        clearProps: "all",
+        ease: "power1.out",
         scrollTrigger: {
           trigger: sec,
           start: "top 85%",
-          once: true
+          end: "top 45%",
+          scrub: 0.7
         }
       }
     );
 
-    // Subtle parallax on standing portrait
+    // Continuous scroll parallax on standing portrait
     const portraitImg = sec.querySelector('.about-portrait-card img');
     if (portraitImg) {
-      gsap.to(portraitImg, {
-        yPercent: -6,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sec,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 0.5
+      gsap.fromTo(portraitImg,
+        { yPercent: 10 },
+        {
+          yPercent: -10,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sec,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 0.6
+          }
         }
-      });
+      );
     }
 
     // Content items reveal
     gsap.fromTo(sec.querySelectorAll('.about-content-item'),
-      { y: 20, opacity: 0 },
+      { y: 25, opacity: 0.2 },
       {
         y: 0,
         opacity: 1,
-        duration: 0.7,
-        stagger: 0.09,
-        ease: "power2.out",
-        clearProps: "all",
+        stagger: 0.08,
+        ease: "power1.out",
         scrollTrigger: {
           trigger: sec,
-          start: "top 85%",
-          once: true
+          start: "top 80%",
+          end: "top 40%",
+          scrub: 0.6
         }
       }
     );
 
     // Value cards staggered entrance
     gsap.fromTo(sec.querySelectorAll('.about-driver-card'),
-      { y: 24, opacity: 0 },
+      { y: 35, opacity: 0.2 },
       {
         y: 0,
         opacity: 1,
-        duration: 0.6,
         stagger: 0.1,
-        ease: "power2.out",
-        clearProps: "all",
+        ease: "power1.out",
         scrollTrigger: {
           trigger: sec,
-          start: "top 85%",
-          once: true
+          start: "top 70%",
+          end: "top 30%",
+          scrub: 0.7
         }
       }
     );

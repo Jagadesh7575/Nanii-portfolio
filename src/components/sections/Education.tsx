@@ -17,37 +17,36 @@ export const Education: React.FC = () => {
     const sec = sectionRef.current;
     if (!sec) return;
 
-    // Header reveal
+    // Header reveal with continuous scrub
     gsap.fromTo(sec.querySelectorAll('.edu-header-item'),
-      { y: 20, opacity: 0 },
+      { y: 30, opacity: 0.2 },
       {
         y: 0,
         opacity: 1,
-        duration: 0.65,
         stagger: 0.08,
-        ease: "power2.out",
+        ease: "power1.out",
         scrollTrigger: {
           trigger: sec,
           start: "top 90%",
-          once: true
+          end: "top 60%",
+          scrub: 0.6
         }
       }
     );
 
-    // Milestone cards reveal
+    // Milestone cards scroll-linked progressive scrub
     gsap.fromTo(sec.querySelectorAll('.edu-card-item'),
-      { y: 28, opacity: 0 },
+      { y: 45, opacity: 0.2 },
       {
         y: 0,
         opacity: 1,
-        duration: 0.7,
-        stagger: 0.1,
-        ease: "power2.out",
-        clearProps: "all",
+        stagger: 0.12,
+        ease: "power1.out",
         scrollTrigger: {
           trigger: sec,
-          start: "top 85%",
-          once: true
+          start: "top 80%",
+          end: "top 35%",
+          scrub: 0.8
         }
       }
     );

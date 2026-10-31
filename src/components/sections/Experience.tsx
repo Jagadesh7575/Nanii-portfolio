@@ -73,19 +73,19 @@ export const Experience: React.FC = () => {
     const sec = sectionRef.current;
     if (!sec) return;
 
-    // Header reveal
+    // Header reveal with continuous scrub
     gsap.fromTo(sec.querySelectorAll('.exp-header-item'),
-      { y: 20, opacity: 0 },
+      { y: 30, opacity: 0.2 },
       {
         y: 0,
         opacity: 1,
-        duration: 0.65,
         stagger: 0.08,
-        ease: "power2.out",
+        ease: "power1.out",
         scrollTrigger: {
           trigger: sec,
           start: "top 90%",
-          once: true
+          end: "top 60%",
+          scrub: 0.6
         }
       }
     );
@@ -109,23 +109,24 @@ export const Experience: React.FC = () => {
       );
     }
 
-    // Timeline cards reveal
-    gsap.fromTo(sec.querySelectorAll('.exp-timeline-card'),
-      { y: 28, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.7,
-        stagger: 0.12,
-        ease: "power2.out",
-        clearProps: "all",
-        scrollTrigger: {
-          trigger: sec,
-          start: "top 85%",
-          once: true
+    // Timeline cards scroll-linked progressive reveals
+    const expCards = sec.querySelectorAll('.exp-timeline-card');
+    expCards.forEach((card) => {
+      gsap.fromTo(card,
+        { y: 35, opacity: 0.2 },
+        {
+          y: 0,
+          opacity: 1,
+          ease: "power1.out",
+          scrollTrigger: {
+            trigger: card,
+            start: "top 88%",
+            end: "top 60%",
+            scrub: 0.6
+          }
         }
-      }
-    );
+      );
+    });
   }, { scope: sectionRef });
 
   return (

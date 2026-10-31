@@ -27,53 +27,50 @@ export const Contact: React.FC = () => {
     const sec = sectionRef.current;
     if (!sec) return;
 
-    // Header reveal
+    // Header reveal with continuous scrub
     gsap.fromTo(sec.querySelectorAll('.contact-header-item'),
-      { y: 20, opacity: 0 },
+      { y: 30, opacity: 0.2 },
       {
         y: 0,
         opacity: 1,
-        duration: 0.65,
         stagger: 0.08,
-        ease: "power2.out",
+        ease: "power1.out",
         scrollTrigger: {
           trigger: sec,
           start: "top 90%",
-          once: true
+          end: "top 60%",
+          scrub: 0.6
         }
       }
     );
 
-    // Left info card reveal
+    // Left info card and right form card converge with scroll scrub
     gsap.fromTo(sec.querySelector('.contact-info-panel'),
-      { x: -24, opacity: 0 },
+      { x: -50, opacity: 0.2 },
       {
         x: 0,
         opacity: 1,
-        duration: 0.75,
-        ease: "power2.out",
-        clearProps: "all",
+        ease: "power1.out",
         scrollTrigger: {
           trigger: sec,
-          start: "top 85%",
-          once: true
+          start: "top 80%",
+          end: "top 35%",
+          scrub: 0.8
         }
       }
     );
 
-    // Right form card reveal
     gsap.fromTo(sec.querySelector('.contact-form-panel'),
-      { x: 24, opacity: 0 },
+      { x: 50, opacity: 0.2 },
       {
         x: 0,
         opacity: 1,
-        duration: 0.75,
-        ease: "power2.out",
-        clearProps: "all",
+        ease: "power1.out",
         scrollTrigger: {
           trigger: sec,
-          start: "top 85%",
-          once: true
+          start: "top 80%",
+          end: "top 35%",
+          scrub: 0.8
         }
       }
     );

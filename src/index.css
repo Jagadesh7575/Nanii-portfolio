@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ========================================================
+   PRIMARY TYPOGRAPHY: Sagfield (Headings) & Glyko Sans (Body)
+   ======================================================== */
+@font-face {
+  font-family: 'Sagfield';
+  src: url('/fonts/Sagfield.woff2') format('woff2'),
+       url('/fonts/Sagfield-WpK7Y.otf') format('opentype'),
+       url('/fonts/Sagfield-aY8eE.ttf') format('truetype');
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Glyko Sans';
+  src: url('/fonts/GlykosansRegular.woff2') format('woff2'),
+       url('/fonts/Glyko-Sans.woff') format('woff'),
+       url('/fonts/GlykosansRegular-6RPpD.otf') format('opentype'),
+       url('/fonts/GlykosansRegular-yYe4M.ttf') format('truetype');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --color-white: #FFFFFF;
   --color-off-white: #FAFAFA;
@@ -18,20 +42,25 @@
   --color-graphite: #292D33;
   --color-charcoal: #17191E;
   --color-black: #0B0C0F;
+
+  --font-family-heading: 'Sagfield', 'Outfit', sans-serif;
+  --font-family-body: 'Glyko Sans', 'Inter', system-ui, sans-serif;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
+    font-family: var(--font-family-body);
   }
   body {
     background-color: var(--color-white);
     color: var(--color-heading);
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-family-body);
+    -webkit-font-smoothing: antialiased;
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Outfit', sans-serif;
-    letter-spacing: -0.02em;
+    font-family: var(--font-family-heading);
+    letter-spacing: -0.015em;
   }
 }
 

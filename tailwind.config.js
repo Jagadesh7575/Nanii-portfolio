@@ -33,8 +33,9 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        heading: ['Outfit', 'Inter', 'sans-serif'],
+        sans: ['"Glyko Sans"', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        body: ['"Glyko Sans"', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        heading: ['Sagfield', 'Outfit', 'Inter', 'sans-serif'],
         mono: ['Geist Mono', 'JetBrains Mono', 'monospace'],
         handwriting: ['Caveat', 'Playwrite', 'cursive'],
       },

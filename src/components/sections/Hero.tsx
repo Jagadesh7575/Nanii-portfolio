@@ -30,35 +30,35 @@ export const Hero: React.FC = () => {
     // Eyebrow badge entrance
     tl.fromTo(content.querySelectorAll('.hero-eyebrow'),
       { y: 16, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.6, delay: 0.1 }
+      { y: 0, opacity: 1, duration: 0.5, clearProps: "all", delay: 0.05 }
     );
 
-    // Staggered masked word reveal for name
-    tl.fromTo(content.querySelectorAll('.hero-name-word'),
-      { y: '115%', opacity: 0 },
-      { y: '0%', opacity: 1, duration: 0.8, stagger: 0.1, ease: "power3.out" },
-      "-=0.3"
+    // Main name heading entrance with full descender clearance
+    tl.fromTo(nameEl,
+      { y: 24, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.6, clearProps: "all" },
+      "-=0.2"
     );
 
-    // Masked subtitle entrance
+    // Subtitle entrance
     tl.fromTo(content.querySelector('.hero-subtitle'),
-      { y: '110%', opacity: 0 },
-      { y: '0%', opacity: 1, duration: 0.7, ease: "power3.out" },
-      "-=0.4"
+      { y: 16, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.5, clearProps: "all" },
+      "-=0.3"
     );
 
     // Description, CTA buttons and metrics entrance
     tl.fromTo(content.querySelectorAll('.hero-fade-up'), 
-      { y: 22, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.65, stagger: 0.08 },
+      { y: 18, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.5, stagger: 0.06, clearProps: "all" },
       "-=0.3"
     );
 
     // Hero portrait fade + smooth zoom-in
     tl.fromTo(portrait, 
-      { opacity: 0, scale: 1.06 },
-      { opacity: 1, scale: 1, duration: 1.1, ease: "power2.out" }, 
-      "-=0.8"
+      { opacity: 0, scale: 1.04 },
+      { opacity: 1, scale: 1, duration: 0.8, ease: "power2.out" }, 
+      "-=0.5"
     );
 
     // Scroll-linked smooth parallax
@@ -130,19 +130,17 @@ export const Hero: React.FC = () => {
             </span>
           </div>
 
-          {/* Main Name Heading with Masked Character/Word Reveal */}
+          {/* Main Name Heading with Generous Line-Height & Descender Clearance */}
           <h1 
             ref={nameRef}
-            className="font-heading font-black text-3xl sm:text-4xl md:text-[44px] lg:text-[48px] xl:text-[56px] 2xl:text-[62px] tracking-tight text-[#111216] leading-[1.05] mb-2 whitespace-nowrap overflow-hidden flex items-center gap-2 sm:gap-3"
+            className="font-heading font-black text-3xl sm:text-4xl md:text-[44px] lg:text-[48px] xl:text-[56px] 2xl:text-[62px] tracking-tight text-[#111216] leading-[1.2] pb-2 mb-1 overflow-visible"
           >
-            <span className="hero-name-word inline-block will-change-transform">S.</span>
-            <span className="hero-name-word inline-block will-change-transform">Jagadeshwar</span>
-            <span className="hero-name-word inline-block will-change-transform">Reddy</span>
+            S. Jagadeshwar Reddy
           </h1>
 
-          {/* Subtitle with Masked Entrance */}
-          <div className="overflow-hidden mb-3">
-            <h2 className="hero-subtitle font-heading font-semibold text-lg sm:text-xl lg:text-[23px] text-[#616670] tracking-tight will-change-transform">
+          {/* Subtitle */}
+          <div className="mb-3">
+            <h2 className="hero-subtitle font-heading font-semibold text-lg sm:text-xl lg:text-[23px] text-[#616670] tracking-tight">
               Full Stack Developer & AI Enthusiast
             </h2>
           </div>
