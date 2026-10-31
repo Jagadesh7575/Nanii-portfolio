@@ -1,6 +1,7 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { EXPERIENCES } from '../../data/portfolioData';
-import { CheckCircle2, Clock, FileText } from 'lucide-react';
+import type { ExperienceItem } from '../../data/portfolioData';
+import { CheckCircle2, Clock, FileText, ExternalLink, Download, X } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
@@ -11,6 +12,61 @@ gsap.registerPlugin(ScrollTrigger);
 
 export const Experience: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const [selectedExpCert, setSelectedExpCert] = useState<{
+    company: string;
+    role: string;
+    activeTab: number;
+    items: {
+      title: string;
+      id?: string;
+      image: string;
+      pdfUrl: string;
+    }[];
+  } | null>(null);
+
+  // Close modal on Escape key press
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setSelectedExpCert(null);
+      }
+    };
+    if (selectedExpCert) {
+      window.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [selectedExpCert]);
+
+  const handleOpenCertificate = (exp: ExperienceItem) => {
+    if (exp.certificates && exp.certificates.length > 0) {
+      setSelectedExpCert({
+        company: exp.company,
+        role: exp.role,
+        activeTab: 0,
+        items: exp.certificates,
+      });
+    } else if (exp.certificatePdf) {
+      setSelectedExpCert({
+        company: exp.company,
+        role: exp.role,
+        activeTab: 0,
+        items: [
+          {
+            title: `${exp.company} — Certificate of Completion`,
+            id: exp.certificateId,
+            image: exp.certificateImage || exp.certificatePdf,
+            pdfUrl: exp.certificatePdf,
+          },
+        ],
+      });
+    }
+  };
 
   useGSAP(() => {
     if (prefersReducedMotion()) return;
@@ -170,15 +226,15 @@ export const Experience: React.FC = () => {
                     </div>
 
                     {exp.certificatePdf && (
-                      <a
-                        href={exp.certificatePdf}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-editorial-heading hover:text-black underline"
+                      <button
+                        type="button"
+                        onClick={() => handleOpenCertificate(exp)}
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-editorial-heading hover:text-black hover:underline cursor-pointer transition-colors"
+                        data-cursor-text="PREVIEW"
                       >
-                        <FileText className="w-3.5 h-3.5" />
+                        <FileText className="w-3.5 h-3.5 text-[#0096C7]" />
                         <span>View Completion Certificate</span>
-                      </a>
+                      </button>
                     )}
                   </div>
 
@@ -190,6 +246,97 @@ export const Experience: React.FC = () => {
         </div>
 
       </div>
+
+      {/* Full Certificate Lightbox Modal for Experience Credentials */}
+      {selectedExpCert && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 animate-fadeIn"
+          onClick={() => setSelectedExpCert(null)}
+        >
+          <div 
+            className="relative bg-white rounded-2xl max-w-4xl w-full max-h-[92vh] overflow-hidden flex flex-col shadow-2xl border border-silver-light"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:p-5 border-b border-silver-light gap-3 bg-foundation-pearl/50">
+              <div>
+                <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-silver-steel">
+                  {selectedExpCert.company} • {selectedExpCert.role}
+                </span>
+                <h3 className="font-heading font-bold text-lg sm:text-xl text-editorial-heading mt-0.5">
+                  {selectedExpCert.items[selectedExpCert.activeTab]?.title}
+                </h3>
+                {selectedExpCert.items[selectedExpCert.activeTab]?.id && (
+                  <p className="text-xs font-mono text-editorial-subtle mt-0.5">
+                    Credential ID: <span className="font-semibold text-editorial-heading">{selectedExpCert.items[selectedExpCert.activeTab]?.id}</span>
+                  </p>
+                )}
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex items-center gap-2 self-end sm:self-auto">
+                <a
+                  href={encodeURI(selectedExpCert.items[selectedExpCert.activeTab]?.pdfUrl || '')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0096C7] text-white text-xs font-semibold hover:bg-[#0077B6] transition-colors shadow-xs"
+                >
+                  <span>Open PDF</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+
+                <a
+                  href={encodeURI(selectedExpCert.items[selectedExpCert.activeTab]?.pdfUrl || '')}
+                  download
+                  className="p-2 rounded-lg hover:bg-foundation-cloud text-editorial-heading transition-colors"
+                  aria-label="Download Certificate PDF"
+                  title="Download Certificate PDF"
+                >
+                  <Download className="w-4 h-4" />
+                </a>
+
+                <button
+                  type="button"
+                  onClick={() => setSelectedExpCert(null)}
+                  className="p-2 rounded-lg hover:bg-foundation-cloud text-editorial-heading transition-colors cursor-pointer"
+                  aria-label="Close modal"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Multiple Certificates Selector Tabs (For iStudio Internship & Training Documents) */}
+            {selectedExpCert.items.length > 1 && (
+              <div className="flex border-b border-silver-light px-4 sm:px-6 bg-white gap-2 pt-2">
+                {selectedExpCert.items.map((_, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => setSelectedExpCert(prev => prev ? { ...prev, activeTab: idx } : null)}
+                    className={`pb-2.5 px-3 text-xs font-semibold border-b-2 transition-all cursor-pointer ${
+                      selectedExpCert.activeTab === idx
+                        ? 'border-black text-black'
+                        : 'border-transparent text-editorial-subtle hover:text-editorial-body'
+                    }`}
+                  >
+                    {idx === 0 ? 'Certificate of Internship' : 'Certificate of Training'}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Modal Body: High Resolution Certificate Image */}
+            <div className="flex-1 overflow-auto p-4 sm:p-6 flex items-center justify-center bg-[#F7F8FA] min-h-[360px]">
+              <img
+                src={selectedExpCert.items[selectedExpCert.activeTab]?.image}
+                alt={selectedExpCert.items[selectedExpCert.activeTab]?.title}
+                className="max-w-full max-h-[68vh] object-contain rounded-lg shadow-md border border-silver-light"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

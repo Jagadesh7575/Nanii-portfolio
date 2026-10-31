@@ -24,6 +24,13 @@ export interface ExperienceItem {
   status: 'Completed' | 'In Progress';
   certificateId?: string;
   certificatePdf?: string;
+  certificateImage?: string;
+  certificates?: {
+    title: string;
+    id: string;
+    image: string;
+    pdfUrl: string;
+  }[];
   description: string[];
   skills: string[];
 }
@@ -219,6 +226,7 @@ export const EXPERIENCES: ExperienceItem[] = [
     status: "Completed",
     certificateId: "ac97b84",
     certificatePdf: "/assets/certificates/CodeSoft.pdf",
+    certificateImage: "/assets/certificates/CodeSoft.pdf.png",
     description: [
       "Completed a rigorous 4-week virtual web development internship program.",
       "Developed responsive interfaces, modern UI components, and integrated client-side logic with exemplary feedback.",
@@ -234,7 +242,22 @@ export const EXPERIENCES: ExperienceItem[] = [
     duration: "Intensive Internship",
     status: "Completed",
     certificateId: "ISWDI3223674 & ISWDT3223674",
-    certificatePdf: "/assets/certificates/internship studio.pdf",
+    certificatePdf: "/assets/certificates/internship_studio.pdf",
+    certificateImage: "/assets/certificates/internship_studio_doc.png",
+    certificates: [
+      {
+        title: "Certificate of Internship — Website Design & Development",
+        id: "ISWDI3223674",
+        image: "/assets/certificates/internship_studio_doc.png",
+        pdfUrl: "/assets/certificates/internship_studio.pdf"
+      },
+      {
+        title: "Certificate of Training — Website Design & Development",
+        id: "ISWDT3223674",
+        image: "/assets/certificates/Internship studio 1.pdf.png",
+        pdfUrl: "/assets/certificates/internship_studio_training.pdf"
+      }
+    ],
     description: [
       "Completed comprehensive training and practical project delivery on Website Design and Development.",
       "Engineered polished user interfaces focusing on semantic structure, cross-device usability, and clean styling standards.",
@@ -285,7 +308,7 @@ export const CERTIFICATES: CertificateItem[] = [
     date: "June 08, 2026",
     category: "Internship",
     image: "/assets/certificates/internship_studio_doc.png",
-    pdfUrl: "/assets/certificates/internship studio.pdf",
+    pdfUrl: "/assets/certificates/internship_studio.pdf",
     certificateId: "ISWDI3223674",
     featured: true
   },
@@ -296,7 +319,7 @@ export const CERTIFICATES: CertificateItem[] = [
     date: "June 08, 2026",
     category: "Internship",
     image: "/assets/certificates/Internship studio 1.pdf.png",
-    pdfUrl: "/assets/certificates/Internship studio 1.pdf",
+    pdfUrl: "/assets/certificates/internship_studio_training.pdf",
     certificateId: "ISWDT3223674",
     featured: true
   },
