@@ -96,12 +96,12 @@ export const Skills: React.FC = () => {
             <div key={idx} className="skill-card-item">
               <TiltCard maxTilt={5} perspective={1000} className="h-full rounded-card">
                 <div
-                  className="bg-white rounded-card p-6 sm:p-7 border border-silver-light hover:border-black/30 hover:shadow-elevated transition-all duration-300 flex flex-col justify-between h-full"
+                  className="group bg-white rounded-card p-6 sm:p-7 border border-silver-light hover:border-black/30 hover:shadow-elevated transition-all duration-300 flex flex-col justify-between h-full"
                   data-cursor-text="SKILL"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-4">
-                      <div className="w-10 h-10 rounded-xl bg-foundation-cloud flex items-center justify-center transition-transform group-hover:scale-110">
+                      <div className="w-10 h-10 rounded-xl bg-foundation-cloud flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 shadow-xs">
                         {getCategoryIcon(cat.category)}
                       </div>
                       <span className="font-mono text-xs font-bold text-silver-steel">

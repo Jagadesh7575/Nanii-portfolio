@@ -2,12 +2,13 @@ import React from 'react';
 import { ArrowUp, Mail } from 'lucide-react';
 import { PERSONAL_INFO } from '../../data/portfolioData';
 import { GithubIcon, LinkedinIcon } from '../icons/SocialIcons';
+import { scrollToId } from './ScrollProgress';
 
 const CURRENT_YEAR = new Date().getFullYear();
 
 export const Footer: React.FC = () => {
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollToId('home', 0);
   };
 
   return (

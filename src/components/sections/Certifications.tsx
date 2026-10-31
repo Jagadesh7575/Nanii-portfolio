@@ -220,27 +220,38 @@ export const Certifications: React.FC = () => {
                     href={selectedCert.verifyUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0096C7] text-white text-xs font-semibold hover:bg-[#0077B6] transition-colors"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0096C7] text-white text-xs font-semibold hover:bg-[#0077B6] transition-colors shadow-xs"
                   >
                     <span>Verify Credential</span>
                     <ExternalLink className="w-3.5 h-3.5" />
                   </a>
                 )}
                 {selectedCert.pdfUrl && (
-                  <a
-                    href={selectedCert.pdfUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    download
-                    className="p-2 rounded-lg hover:bg-foundation-cloud text-editorial-heading transition-colors"
-                    aria-label="Download Certificate"
-                  >
-                    <Download className="w-4 h-4" />
-                  </a>
+                  <>
+                    <a
+                      href={encodeURI(selectedCert.pdfUrl)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#111216] text-white text-xs font-semibold hover:bg-black transition-colors shadow-xs"
+                    >
+                      <span>Open PDF</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                    <a
+                      href={encodeURI(selectedCert.pdfUrl)}
+                      download
+                      className="p-2 rounded-lg hover:bg-foundation-cloud text-editorial-heading transition-colors"
+                      aria-label="Download Certificate PDF"
+                      title="Download Certificate PDF"
+                    >
+                      <Download className="w-4 h-4" />
+                    </a>
+                  </>
                 )}
                 <button
+                  type="button"
                   onClick={() => setSelectedCert(null)}
-                  className="p-2 rounded-lg hover:bg-foundation-cloud text-editorial-heading transition-colors"
+                  className="p-2 rounded-lg hover:bg-foundation-cloud text-editorial-heading transition-colors cursor-pointer"
                   aria-label="Close modal"
                 >
                   <X className="w-5 h-5" />

@@ -51,6 +51,21 @@ export const About: React.FC = () => {
       }
     );
 
+    // Subtle parallax on standing portrait
+    const portraitImg = sec.querySelector('.about-portrait-card img');
+    if (portraitImg) {
+      gsap.to(portraitImg, {
+        yPercent: -6,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sec,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 0.5
+        }
+      });
+    }
+
     // Content items reveal
     gsap.fromTo(sec.querySelectorAll('.about-content-item'),
       { y: 20, opacity: 0 },

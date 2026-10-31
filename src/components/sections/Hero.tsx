@@ -27,22 +27,44 @@ export const Hero: React.FC = () => {
     // Timeline for initial hero entrance
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-    // Staggered reveal for eyebrow and details
+    // Eyebrow badge entrance
+    tl.fromTo(content.querySelectorAll('.hero-eyebrow'),
+      { y: 16, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.6, delay: 0.1 }
+    );
+
+    // Staggered masked word reveal for name
+    tl.fromTo(content.querySelectorAll('.hero-name-word'),
+      { y: '115%', opacity: 0 },
+      { y: '0%', opacity: 1, duration: 0.8, stagger: 0.1, ease: "power3.out" },
+      "-=0.3"
+    );
+
+    // Masked subtitle entrance
+    tl.fromTo(content.querySelector('.hero-subtitle'),
+      { y: '110%', opacity: 0 },
+      { y: '0%', opacity: 1, duration: 0.7, ease: "power3.out" },
+      "-=0.4"
+    );
+
+    // Description, CTA buttons and metrics entrance
     tl.fromTo(content.querySelectorAll('.hero-fade-up'), 
-      { y: 24, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.7, stagger: 0.08, delay: 0.1 }
+      { y: 22, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.65, stagger: 0.08 },
+      "-=0.3"
     );
 
     // Hero portrait fade + smooth zoom-in
     tl.fromTo(portrait, 
-      { opacity: 0, scale: 1.05 },
+      { opacity: 0, scale: 1.06 },
       { opacity: 1, scale: 1, duration: 1.1, ease: "power2.out" }, 
-      "-=0.5"
+      "-=0.8"
     );
 
     // Scroll-linked smooth parallax
     gsap.to(portrait, {
-      yPercent: 14,
+      yPercent: 12,
+      scale: 1.03,
       ease: "none",
       scrollTrigger: {
         trigger: hero,
@@ -101,25 +123,29 @@ export const Hero: React.FC = () => {
         <div className="lg:col-span-7 xl:col-span-6 flex flex-col justify-center">
           
           {/* Eyebrow Badge with Specular Dot */}
-          <div className="hero-fade-up inline-flex items-center gap-2 mb-3">
+          <div className="hero-eyebrow inline-flex items-center gap-2 mb-3">
             <span className="w-2 h-2 rounded-full bg-gradient-to-tr from-[#00B4D8] via-gray-200 to-white shadow-xs ring-1 ring-black/20 animate-pulse" />
             <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.22em] text-[#616670] font-mono">
               BUILDING IDEAS FOR A SMARTER TOMORROW
             </span>
           </div>
 
-          {/* Main Name Heading */}
+          {/* Main Name Heading with Masked Character/Word Reveal */}
           <h1 
             ref={nameRef}
-            className="hero-fade-up font-heading font-black text-3xl sm:text-4xl md:text-[44px] lg:text-[48px] xl:text-[56px] 2xl:text-[62px] tracking-tight text-[#111216] leading-[1.05] mb-2 whitespace-nowrap"
+            className="font-heading font-black text-3xl sm:text-4xl md:text-[44px] lg:text-[48px] xl:text-[56px] 2xl:text-[62px] tracking-tight text-[#111216] leading-[1.05] mb-2 whitespace-nowrap overflow-hidden flex items-center gap-2 sm:gap-3"
           >
-            S. Jagadeshwar Reddy
+            <span className="hero-name-word inline-block will-change-transform">S.</span>
+            <span className="hero-name-word inline-block will-change-transform">Jagadeshwar</span>
+            <span className="hero-name-word inline-block will-change-transform">Reddy</span>
           </h1>
 
-          {/* Subtitle with Restored Semantic '&' */}
-          <h2 className="hero-fade-up font-heading font-semibold text-lg sm:text-xl lg:text-[23px] text-[#616670] tracking-tight mb-3">
-            Full Stack Developer & AI Enthusiast
-          </h2>
+          {/* Subtitle with Masked Entrance */}
+          <div className="overflow-hidden mb-3">
+            <h2 className="hero-subtitle font-heading font-semibold text-lg sm:text-xl lg:text-[23px] text-[#616670] tracking-tight will-change-transform">
+              Full Stack Developer & AI Enthusiast
+            </h2>
+          </div>
 
           {/* Bio Description */}
           <p className="hero-fade-up text-[14px] sm:text-[15px] text-[#616670] max-w-[460px] leading-relaxed mb-6 font-normal">

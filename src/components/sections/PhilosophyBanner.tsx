@@ -38,18 +38,38 @@ export const PhilosophyBanner: React.FC = () => {
     const banner = bannerRef.current;
     if (!banner) return;
 
-    gsap.from(banner.querySelectorAll('.pillar-item'), {
-      y: 20,
-      opacity: 0,
-      stagger: 0.1,
-      duration: 0.65,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: banner,
-        start: "top 85%",
-        once: true
+    // Pillar items reveal with clearProps to avoid stuck states
+    gsap.fromTo(banner.querySelectorAll('.pillar-item'),
+      { y: 22, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        stagger: 0.08,
+        duration: 0.65,
+        ease: "power2.out",
+        clearProps: "all",
+        scrollTrigger: {
+          trigger: banner,
+          start: "top 85%",
+          once: true
+        }
       }
-    });
+    );
+
+    // Subtle parallax on decorative chrome ring
+    const ring = banner.querySelector('.philosophy-ring');
+    if (ring) {
+      gsap.to(ring, {
+        yPercent: -15,
+        ease: "none",
+        scrollTrigger: {
+          trigger: banner,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 0.6
+        }
+      });
+    }
   }, { scope: bannerRef });
 
   return (
@@ -58,7 +78,7 @@ export const PhilosophyBanner: React.FC = () => {
       className="relative bg-[#101114] text-white py-8 sm:py-10 overflow-hidden border-t border-white/10"
     >
       {/* Background Chrome Ring Gradient Arcs on the Right */}
-      <div className="absolute right-0 top-0 bottom-0 w-1/3 opacity-25 pointer-events-none select-none">
+      <div className="philosophy-ring absolute right-0 top-0 bottom-0 w-1/3 opacity-25 pointer-events-none select-none will-change-transform">
         <div className="w-[450px] h-[450px] rounded-full border-[36px] border-[#B9BDC4]/25 blur-[1px] translate-x-1/3 translate-y-1/4" />
       </div>
 

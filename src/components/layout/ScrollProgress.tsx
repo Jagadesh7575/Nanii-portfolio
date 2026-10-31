@@ -9,7 +9,7 @@ let globalLenisInstance: Lenis | null = null;
 
 export const getLenis = (): Lenis | null => globalLenisInstance;
 
-export const scrollToId = (id: string, offset = -64) => {
+export const scrollToId = (id: string, offset = -76) => {
   const target = document.getElementById(id);
   if (!target) return;
 
