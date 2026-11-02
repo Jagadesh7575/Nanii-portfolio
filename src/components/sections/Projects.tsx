@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
-import { ArrowRight, ExternalLink, Sparkles, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, ExternalLink, CheckCircle2 } from 'lucide-react';
 import { GithubIcon } from '../icons/SocialIcons';
 import { TiltCard } from '../ui/TiltCard';
 import { MagneticButton } from '../ui/MagneticButton';
