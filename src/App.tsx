@@ -62,7 +62,7 @@ export const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white text-editorial-heading antialiased selection:bg-black selection:text-white overflow-x-hidden">
+    <div className="min-h-screen bg-[#050505] text-[#F5F5F5] antialiased selection:bg-[#00D9FF] selection:text-[#050505] overflow-x-hidden">
       {/* Lenis Momentum Scroll Engine & Kinetic Progress Indicator */}
       <ScrollProgress />
 

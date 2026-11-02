@@ -79,8 +79,8 @@ export const CustomCursor: React.FC = () => {
         ref={cursorRef}
         className={`fixed top-0 left-0 -translate-x-1/2 -translate-y-1/2 rounded-full transition-transform duration-150 ${
           isHovered
-            ? 'w-2 h-2 bg-[#00B4D8]'
-            : 'w-2 h-2 bg-[#111216]'
+            ? 'w-2.5 h-2.5 bg-[#00D9FF] shadow-[0_0_12px_#00D9FF]'
+            : 'w-2 h-2 bg-[#F5F5F5] shadow-[0_0_8px_rgba(255,255,255,0.6)]'
         }`}
       />
 
@@ -89,12 +89,12 @@ export const CustomCursor: React.FC = () => {
         ref={followerRef}
         className={`fixed top-0 left-0 -translate-x-1/2 -translate-y-1/2 rounded-full flex items-center justify-center transition-all duration-300 ${
           isHovered
-            ? 'w-12 h-12 bg-[#00B4D8]/15 border border-[#00B4D8]/50 backdrop-blur-[1px] scale-125'
-            : 'w-8 h-8 border border-[#111216]/25 bg-transparent scale-100'
+            ? 'w-14 h-14 bg-[#00D9FF]/15 border border-[#00D9FF]/60 backdrop-blur-[2px] scale-125 shadow-[0_0_20px_rgba(0,217,255,0.35)]'
+            : 'w-8 h-8 border border-white/20 bg-transparent scale-100'
         }`}
       >
         {cursorText && (
-          <span className="text-[9px] font-mono font-bold uppercase tracking-wider text-[#0096C7] select-none">
+          <span className="text-[9px] font-mono font-bold uppercase tracking-wider text-[#00D9FF] select-none drop-shadow-[0_0_6px_rgba(0,217,255,0.7)]">
             {cursorText}
           </span>
         )}

@@ -50,7 +50,7 @@ export const ScrollProgress: React.FC = () => {
     };
 
     gsap.ticker.add(updateLenisTicker);
-    gsap.ticker.lagSmoothing(0);
+    gsap.ticker.lagSmoothing(500, 33);
 
     // Global scroll progress tracker
     const handleScrollProgress = () => {
@@ -74,7 +74,7 @@ export const ScrollProgress: React.FC = () => {
   return (
     <>
       {/* Top Global Scroll Progress Accent Bar */}
-      <div className="fixed top-0 left-0 right-0 h-[2.5px] z-[9999] pointer-events-none bg-black/5">
+      <div className="fixed top-0 left-0 right-0 h-[2.5px] z-[9999] pointer-events-none bg-white/5">
         <div
           className="h-full bg-gradient-to-r from-[#00B4D8] via-[#0284C7] to-[#00F0FF] transition-all duration-75 ease-out shadow-[0_0_10px_rgba(0,180,216,0.6)]"
           style={{ width: `${scrollProgress}%` }}

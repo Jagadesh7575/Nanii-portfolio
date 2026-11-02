@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { prefersReducedMotion } from '../../styles/motion';
 import { TiltCard } from '../ui/TiltCard';
+import { MaskedTextReveal } from '../ui/MaskedTextReveal';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -17,57 +18,63 @@ export const Education: React.FC = () => {
     const sec = sectionRef.current;
     if (!sec) return;
 
-    // Header reveal with continuous scrub
+    // Header reveal with smooth cinematic easing
     gsap.fromTo(sec.querySelectorAll('.edu-header-item'),
-      { y: 30, opacity: 0.2 },
+      { y: 35, opacity: 0 },
       {
         y: 0,
         opacity: 1,
-        stagger: 0.08,
-        ease: "power1.out",
+        duration: 0.8,
+        stagger: 0.1,
+        ease: "power3.out",
+        force3D: true,
         scrollTrigger: {
           trigger: sec,
-          start: "top 90%",
-          end: "top 60%",
-          scrub: 0.6
+          start: "top 85%",
+          toggleActions: "play reverse play reverse"
         }
       }
     );
 
-    // Milestone cards scroll-linked progressive scrub
+    // Milestone cards staggered cascade reveal
     gsap.fromTo(sec.querySelectorAll('.edu-card-item'),
-      { y: 45, opacity: 0.2 },
+      { y: 55, opacity: 0, scale: 0.94 },
       {
         y: 0,
         opacity: 1,
-        stagger: 0.12,
-        ease: "power1.out",
+        scale: 1,
+        duration: 0.8,
+        stagger: 0.14,
+        ease: "power3.out",
+        force3D: true,
         scrollTrigger: {
           trigger: sec,
           start: "top 80%",
-          end: "top 35%",
-          scrub: 0.8
+          toggleActions: "play reverse play reverse"
         }
       }
     );
   }, { scope: sectionRef });
 
   return (
-    <section id="education" ref={sectionRef} className="py-24 bg-foundation-pearl relative">
+    <section id="education" ref={sectionRef} className="py-24 bg-[#050505] border-t border-white/[0.08] relative">
       <div className="max-w-7xl mx-auto px-6 sm:px-8">
         
         {/* Section Header */}
         <div className="edu-header-container max-w-2xl mb-16">
           <div className="edu-header-item inline-flex items-center gap-2 mb-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-black" />
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-editorial-subtle font-mono">
+            <span className="w-2 h-2 rounded-full bg-[#00D9FF] shadow-[0_0_8px_#00D9FF] animate-pulse" />
+            <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] text-[#00D9FF] font-mono">
               ACADEMIC BACKGROUND
             </span>
           </div>
-          <h2 className="edu-header-item font-heading font-extrabold text-3xl sm:text-5xl text-editorial-heading tracking-tight mb-4">
-            Education Milestones
-          </h2>
-          <p className="edu-header-item text-base sm:text-lg text-editorial-body leading-relaxed">
+          <MaskedTextReveal
+            as="h2"
+            text="Education Milestones"
+            italicWords={["Milestones"]}
+            className="font-heading font-black text-3xl sm:text-5xl text-[#F5F5F5] tracking-tight mb-4 leading-tight"
+          />
+          <p className="edu-header-item text-base sm:text-lg text-[#929292] leading-relaxed">
             Formal engineering education and technical foundations supporting continuous growth.
           </p>
         </div>
@@ -78,15 +85,15 @@ export const Education: React.FC = () => {
             <div key={idx} className="edu-card-item">
               <TiltCard maxTilt={3} perspective={1400} className="rounded-card">
                 <div
-                  className="bg-white rounded-card p-6 sm:p-8 border border-silver-light hover:border-black/30 hover:shadow-elevated transition-all duration-300 grid grid-cols-1 md:grid-cols-12 gap-6 items-center"
+                  className="bg-[#0A0A0A] hover:bg-[#111111] rounded-card p-6 sm:p-8 border border-white/10 hover:border-white/20 hover:shadow-[0_20px_40px_rgba(0,0,0,0.7)] transition-all duration-300 grid grid-cols-1 md:grid-cols-12 gap-6 items-center"
                   data-cursor-text="EDU"
                 >
                   {/* Year & Period Column */}
-                  <div className="md:col-span-3 flex md:flex-col items-center md:items-start justify-between border-b md:border-b-0 md:border-r border-silver-light/60 pb-3 md:pb-0 md:pr-6">
-                    <span className="font-mono text-sm font-bold text-editorial-heading">
+                  <div className="md:col-span-3 flex md:flex-col items-center md:items-start justify-between border-b md:border-b-0 md:border-r border-white/10 pb-3 md:pb-0 md:pr-6">
+                    <span className="font-mono text-sm font-bold text-[#F5F5F5]">
                       {edu.period}
                     </span>
-                    <span className="inline-block mt-1 px-2.5 py-0.5 rounded-full bg-foundation-cloud text-[11px] font-semibold text-editorial-body">
+                    <span className="inline-block mt-1 px-2.5 py-0.5 rounded-full bg-[#141414] border border-white/10 text-[11px] font-semibold text-[#929292]">
                       {edu.status}
                     </span>
                   </div>
@@ -94,25 +101,25 @@ export const Education: React.FC = () => {
                   {/* Institution and Degree Details */}
                   <div className="md:col-span-9">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
-                      <h3 className="font-heading font-bold text-xl sm:text-2xl text-editorial-heading">
+                      <h3 className="font-heading font-bold text-xl sm:text-2xl text-[#F5F5F5]">
                         {edu.degree}
                       </h3>
                       {edu.grade && (
-                        <span className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 bg-black text-white rounded-full shrink-0">
+                        <span className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 bg-[#00D9FF] text-[#050505] rounded-full shrink-0 shadow-[0_0_12px_rgba(0,217,255,0.4)]">
                           <Award className="w-3.5 h-3.5" />
                           <span>{edu.grade}</span>
                         </span>
                       )}
                     </div>
 
-                    <div className="text-sm font-medium text-editorial-body mb-3">
+                    <div className="text-sm font-medium text-[#8E94A0] mb-3">
                       {edu.institution} {edu.focus && `• Focus: ${edu.focus}`}
                     </div>
 
                     <ul className="space-y-1">
                       {edu.highlights.map((h, hIdx) => (
-                        <li key={hIdx} className="text-xs sm:text-sm text-editorial-body leading-relaxed flex items-start gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-silver-steel mt-2 shrink-0" />
+                        <li key={hIdx} className="text-xs sm:text-sm text-[#A1A1AA] leading-relaxed flex items-start gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#00D2FF]/60 mt-2 shrink-0" />
                           <span>{h}</span>
                         </li>
                       ))}

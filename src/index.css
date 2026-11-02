@@ -1,83 +1,69 @@
+@import './font-faces.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ========================================================
-   PRIMARY TYPOGRAPHY: Sagfield (Headings) & Glyko Sans (Body)
-   ======================================================== */
-@font-face {
-  font-family: 'Sagfield';
-  src: url('/fonts/Sagfield.woff2') format('woff2'),
-       url('/fonts/Sagfield-WpK7Y.otf') format('opentype'),
-       url('/fonts/Sagfield-aY8eE.ttf') format('truetype');
-  font-weight: 400 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Glyko Sans';
-  src: url('/fonts/GlykosansRegular.woff2') format('woff2'),
-       url('/fonts/Glyko-Sans.woff') format('woff'),
-       url('/fonts/GlykosansRegular-6RPpD.otf') format('opentype'),
-       url('/fonts/GlykosansRegular-yYe4M.ttf') format('truetype');
-  font-weight: 400 700;
-  font-style: normal;
-  font-display: swap;
-}
-
 :root {
-  --color-white: #FFFFFF;
-  --color-off-white: #FAFAFA;
-  --color-pearl: #F7F8FA;
-  --color-cloud: #F0F1F3;
-  --color-border: #E3E5E8;
-  --color-silver-light: #DFE2E6;
-  --color-silver: #C2C7CE;
-  --color-steel: #8C939D;
-  --color-muted: #747B85;
-  --color-heading: #111318;
-  --color-body: #626974;
-  --color-subtle-text: #8A9099;
-  --color-graphite: #292D33;
-  --color-charcoal: #17191E;
-  --color-black: #0B0C0F;
+  --color-bg-primary: #050505;
+  --color-bg-secondary: #0A0A0A;
+  --color-bg-elevated: #121212;
+  --color-border: rgba(255, 255, 255, 0.10);
+  --color-border-subtle: rgba(255, 255, 255, 0.06);
+  --color-text-primary: #F5F5F5;
+  --color-text-secondary: #929292;
+  --color-text-muted: #666666;
+  --color-accent: #00D9FF;
+  --color-accent-subtle: rgba(0, 217, 255, 0.12);
 
-  --font-family-heading: 'Sagfield', 'Outfit', sans-serif;
-  --font-family-body: 'Glyko Sans', 'Inter', system-ui, sans-serif;
+  --font-family-heading: 'Sagfeild', 'Sagfield', serif, sans-serif;
+  --font-family-body: 'Glyko Sans-Regular', 'Glyko Sans Regular', 'Glyko Sans', system-ui, -apple-system, sans-serif;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
     font-family: var(--font-family-body);
   }
   body {
-    background-color: var(--color-white);
-    color: var(--color-heading);
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
     font-family: var(--font-family-body);
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
-  h1, h2, h3, h4, h5, h6 {
+  h1, h2, h3, h4, h5, h6, .font-heading, .font-display {
     font-family: var(--font-family-heading);
     letter-spacing: -0.015em;
+    color: var(--color-text-primary);
+  }
+  p, span, a, button, input, textarea, label, select, .font-body, .font-sans {
+    font-family: var(--font-family-body);
   }
 }
 
-/* Custom Glass & Chrome Utilities */
+/* Custom Glass & Editorial Utilities */
 .glass-panel {
-  background: rgba(23, 25, 30, 0.65);
+  background: rgba(16, 16, 16, 0.75);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.glass-card-dark {
+  background: rgba(16, 17, 20, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid #262626;
 }
 
 .glass-card-light {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(18, 19, 23, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(227, 229, 232, 0.8);
+  border: 1px solid #262626;
 }
 
 .metallic-ring-gradient {

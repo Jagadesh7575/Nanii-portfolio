@@ -254,7 +254,7 @@ export const EXPERIENCES: ExperienceItem[] = [
       {
         title: "Certificate of Training — Website Design & Development",
         id: "ISWDT3223674",
-        image: "/assets/certificates/Internship studio 1.pdf.png",
+        image: "/assets/certificates/internship_studio_training.png",
         pdfUrl: "/assets/certificates/internship_studio_training.pdf"
       }
     ],

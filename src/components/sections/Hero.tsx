@@ -1,70 +1,156 @@
 import React, { useRef } from 'react';
-import { ArrowRight, Download, MousePointer, Sparkles } from 'lucide-react';
+import { ArrowRight, Download, ChevronDown } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { PERSONAL_INFO } from '../../data/portfolioData';
 import { prefersReducedMotion } from '../../styles/motion';
 import { scrollToId } from '../layout/ScrollProgress';
+import { MagneticButton } from '../ui/MagneticButton';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export const Hero: React.FC = () => {
   const heroRef = useRef<HTMLElement>(null);
-  const portraitRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const nameRef = useRef<HTMLHeadingElement>(null);
+  const scrollIndicatorRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     if (prefersReducedMotion()) return;
 
     const hero = heroRef.current;
+    const img = imageRef.current;
     const content = contentRef.current;
-    const portrait = portraitRef.current;
-    const nameEl = nameRef.current;
-    if (!hero || !content || !portrait || !nameEl) return;
+    const scrollIndicator = scrollIndicatorRef.current;
+    if (!hero || !content) return;
 
-    // Timeline for initial hero entrance
+    // Master cinematic entrance timeline
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-    // Eyebrow badge entrance
+    // 01. Background image subtle cinematic entrance (scale & opacity)
+    if (img) {
+      tl.fromTo(img,
+        { opacity: 0, scale: 1.04 },
+        { opacity: 1, scale: 1.0, duration: 1.2, ease: "power2.out" }
+      );
+    }
+
+    // 02. Eyebrow badge entrance
     tl.fromTo(content.querySelectorAll('.hero-eyebrow'),
-      { y: 16, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.5, clearProps: "all", delay: 0.05 }
+      { y: 25, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" },
+      "-=0.9"
     );
 
-    // Main name heading entrance with full descender clearance
-    tl.fromTo(nameEl,
-      { y: 24, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.6, clearProps: "all" },
-      "-=0.2"
+    // 03. Name Display Title entrance (with full descender clearance)
+    tl.fromTo(content.querySelectorAll('.hero-name-title'),
+      { y: 35, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.85, ease: "power4.out" },
+      "-=0.6"
     );
 
-    // Subtitle entrance
-    tl.fromTo(content.querySelector('.hero-subtitle'),
-      { y: 16, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.5, clearProps: "all" },
-      "-=0.3"
+    // 04. Role Subtitle entrance
+    tl.fromTo(content.querySelectorAll('.hero-role-subtitle'),
+      { y: 20, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" },
+      "-=0.6"
     );
 
-    // Description, CTA buttons and metrics entrance
-    tl.fromTo(content.querySelectorAll('.hero-fade-up'), 
-      { y: 18, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.5, stagger: 0.06, clearProps: "all" },
-      "-=0.3"
+    // 05. Bio description entrance
+    tl.fromTo(content.querySelectorAll('.hero-bio-text'),
+      { y: 20, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" },
+      "-=0.55"
     );
 
-    // Hero portrait fade + smooth zoom-in
-    tl.fromTo(portrait, 
-      { opacity: 0, scale: 1.04 },
-      { opacity: 1, scale: 1, duration: 0.8, ease: "power2.out" }, 
+    // 06. Action Buttons entrance
+    tl.fromTo(content.querySelectorAll('.hero-cta-group'),
+      { y: 25, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" },
       "-=0.5"
     );
 
+    // 07. Metrics & Availability entrance
+    tl.fromTo(content.querySelectorAll('.hero-metrics-bar'),
+      { y: 20, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" },
+      "-=0.4"
+    );
+
+    // 08. Scroll indicator entrance
+    if (scrollIndicator) {
+      tl.fromTo(scrollIndicator,
+        { opacity: 0, y: -10 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
+        "-=0.3"
+      );
+    }
+
+    // Interactive subtle mouse parallax on desktop
+    const isTouch = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
+    if (!isTouch && img) {
+      const handleMouseMove = (e: MouseEvent) => {
+        const rect = hero.getBoundingClientRect();
+        const mouseX = (e.clientX - rect.left) / rect.width - 0.5;
+        const mouseY = (e.clientY - rect.top) / rect.height - 0.5;
+
+        // Subtle background pan
+        gsap.to(img, {
+          x: mouseX * 15,
+          y: mouseY * 10,
+          duration: 0.8,
+          ease: "power2.out",
+          overwrite: "auto"
+        });
+
+        // Subtle typography shift with cursor
+        gsap.to(content, {
+          x: -mouseX * 8,
+          y: -mouseY * 6,
+          duration: 0.8,
+          ease: "power2.out",
+          overwrite: "auto"
+        });
+      };
+
+      const handleMouseLeave = () => {
+        gsap.to([img, content], {
+          x: 0,
+          y: 0,
+          duration: 1.0,
+          ease: "power3.out",
+          overwrite: "auto"
+        });
+      };
+
+      hero.addEventListener('mousemove', handleMouseMove);
+      hero.addEventListener('mouseleave', handleMouseLeave);
+
+      return () => {
+        hero.removeEventListener('mousemove', handleMouseMove);
+        hero.removeEventListener('mouseleave', handleMouseLeave);
+      };
+    }
+
     // Scroll-linked smooth parallax
-    gsap.to(portrait, {
-      yPercent: 12,
-      scale: 1.03,
+    if (img) {
+      gsap.to(img, {
+        yPercent: 8,
+        scale: 1.02,
+        ease: "none",
+        scrollTrigger: {
+          trigger: hero,
+          start: "top top",
+          end: "bottom top",
+          scrub: 0.6
+        }
+      });
+    }
+
+    gsap.to(content, {
+      yPercent: -10,
+      opacity: 0.35,
       ease: "none",
       scrollTrigger: {
         trigger: hero,
@@ -80,204 +166,175 @@ export const Hero: React.FC = () => {
     <section
       id="home"
       ref={heroRef}
-      className="relative w-full overflow-hidden bg-[#FAFAFA] pt-[84px] pb-10 flex flex-col justify-between"
-      style={{
-        minHeight: '580px',
-        height: 'clamp(580px, 75svh, 750px)',
-        isolation: 'isolate',
-      }}
+      className="relative w-full h-screen min-h-[100svh] overflow-hidden bg-[#050505] flex flex-col justify-between selection:bg-[#00D9FF] selection:text-[#050505]"
+      style={{ isolation: 'isolate' }}
     >
-      {/* Background Decorative Metallic Grid & Ambient Ring */}
-      <div 
-        className="pointer-events-none absolute inset-0 opacity-[0.03] z-0" 
-        style={{
-          backgroundImage: 'radial-gradient(#111216 1px, transparent 1px)',
-          backgroundSize: '28px 28px'
-        }}
-      />
-      <div className="pointer-events-none absolute top-12 left-1/4 w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-[#00B4D8]/5 via-[#0284C7]/5 to-transparent blur-3xl -z-10" />
-
-      {/* Right-Side Cinematic Chrome Composition with Jagadeshwar in Red Blazer */}
-      <div 
-        ref={portraitRef}
-        className="absolute top-0 right-0 h-full w-full lg:w-[62%] pointer-events-none select-none z-0 overflow-hidden"
-        style={{
-          maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.08) 8%, rgba(0,0,0,0.9) 22%, black 100%)',
-          WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.08) 8%, rgba(0,0,0,0.9) 22%, black 100%)',
-        }}
-      >
+      {/* =========================================================================
+          LAYER 01: FULL-SCREEN CINEMATIC BACKGROUND IMAGE
+          - Sized 15-20% smaller than previous crop, centered vertically.
+          - Entire composition visible: face, hair, spectacles, gold chain,
+            red blazer, Apple laptop, coffee mug, notebook, pen, plant and desk.
+          - No zoom into upper body, no elements extending beyond viewport.
+          - 100% natural opacity, crisp and sharp.
+          - Shifted slightly right to create visual harmony with the left typography.
+         ========================================================================= */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none select-none z-0 flex items-center justify-center lg:justify-end lg:pr-[2vw] xl:pr-[5vw] 2xl:pr-[7vw]">
         <img
-          src="/assets/portraits/hero/hero_master_red_blazer.png"
-          alt="S. Jagadeshwar Reddy - Cinematic Editorial Portrait"
-          className="w-full h-full object-cover object-[center_bottom] lg:object-[right_bottom]"
+          ref={imageRef}
+          src="/assets/portraits/hero/hero_cinematic_portrait.jpg"
+          alt="S. Jagadeshwar Reddy — Full Stack Developer & AI Enthusiast"
+          className="h-[76vh] sm:h-[80vh] lg:h-[84vh] xl:h-[86vh] 2xl:h-[88vh] max-h-[780px] w-auto max-w-full lg:max-w-none object-contain will-change-transform"
           loading="eager"
+          fetchPriority="high"
         />
+
+        {/* Subtle Localized Left-Side Gradient to ensure 100% text readability without dimming the subject */}
+        <div className="absolute inset-y-0 left-0 w-full sm:w-[85vw] lg:w-[60vw] xl:w-[52vw] bg-gradient-to-r from-[#050505]/95 via-[#050505]/80 sm:via-[#050505]/50 to-transparent pointer-events-none" />
+
+        {/* Subtle Bottom Vignette for smooth transition into Projects section */}
+        <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-[#050505] via-[#050505]/50 to-transparent pointer-events-none" />
+
+        {/* Atmospheric Cyan Ambient Glow behind right area */}
+        <div className="pointer-events-none absolute top-1/4 right-[12vw] w-[450px] h-[450px] rounded-full bg-gradient-to-tr from-[#00D9FF]/8 via-[#0284C7]/3 to-transparent blur-3xl" />
       </div>
 
-      {/* Main Content Container */}
+      {/* =========================================================================
+          LAYER 02: EDITORIAL CONTENT STAGE (Positioned on the Left)
+          - Introduction, name, role, bio, CTAs and statistics.
+          - Kept readable against the background, never overlaps the face.
+          - Sagfeild heading font with full descender clearance (no clipped g/y).
+          - Glyko Sans body font.
+         ========================================================================= */}
       <div 
         ref={contentRef}
-        className="relative z-10 max-w-[1440px] mx-auto px-6 sm:px-10 w-full my-auto grid grid-cols-1 lg:grid-cols-12 items-center"
+        className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-12 my-auto pt-24 pb-8 sm:pt-28 sm:pb-12"
       >
-        {/* Left Column (Content Stage) */}
-        <div className="lg:col-span-7 xl:col-span-6 flex flex-col justify-center">
+        <div className="flex flex-col justify-center max-w-[560px] lg:max-w-[600px]">
           
-          {/* Eyebrow Badge with Specular Dot */}
-          <div className="hero-eyebrow inline-flex items-center gap-2 mb-3">
-            <span className="w-2 h-2 rounded-full bg-gradient-to-tr from-[#00B4D8] via-gray-200 to-white shadow-xs ring-1 ring-black/20 animate-pulse" />
-            <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.22em] text-[#616670] font-mono">
+          {/* Eyebrow Headline Badge with Live Pulsing Dot */}
+          <div className="hero-eyebrow inline-flex items-center gap-2.5 mb-3 sm:mb-4">
+            <span className="w-2 h-2 rounded-full bg-[#00D9FF] shadow-[0_0_12px_#00D9FF] animate-pulse" />
+            <span className="text-[10px] sm:text-[11.5px] font-mono font-bold uppercase tracking-[0.24em] text-[#00D9FF]">
               BUILDING IDEAS FOR A SMARTER TOMORROW
             </span>
           </div>
 
-          {/* Main Name Heading with Generous Line-Height & Descender Clearance */}
-          <h1 
-            ref={nameRef}
-            className="font-heading font-black text-3xl sm:text-4xl md:text-[44px] lg:text-[48px] xl:text-[56px] 2xl:text-[62px] tracking-tight text-[#111216] leading-[1.2] pb-2 mb-1 overflow-visible"
-          >
+          {/* Primary Name Display with Sagfeild Font & Complete Descender Clearance */}
+          <h1 className="hero-name-title font-heading font-black text-4xl sm:text-5xl md:text-6xl lg:text-[60px] xl:text-[68px] tracking-tight text-[#F5F5F5] leading-[1.12] pb-3 mb-1 overflow-visible">
             S. Jagadeshwar Reddy
           </h1>
 
-          {/* Subtitle */}
-          <div className="mb-3">
-            <h2 className="hero-subtitle font-heading font-semibold text-lg sm:text-xl lg:text-[23px] text-[#616670] tracking-tight">
-              Full Stack Developer & AI Enthusiast
-            </h2>
+          {/* Role Subtitle with Electric Cyan Highlight */}
+          <div className="hero-role-subtitle mb-4 sm:mb-5">
+            <p className="font-heading font-semibold text-base sm:text-xl lg:text-[22px] text-[#A1A1AA] tracking-tight flex flex-wrap items-center gap-2">
+              <span>Full Stack Developer</span>
+              <span className="text-white/20">•</span>
+              <span className="text-[#00D9FF] drop-shadow-[0_0_12px_rgba(0,217,255,0.4)]">AI Enthusiast</span>
+            </p>
           </div>
 
-          {/* Bio Description */}
-          <p className="hero-fade-up text-[14px] sm:text-[15px] text-[#616670] max-w-[460px] leading-relaxed mb-6 font-normal">
+          {/* Bio Description in Glyko Sans */}
+          <p className="hero-bio-text text-[14px] sm:text-[15.5px] text-[#A1A1AA] max-w-[490px] leading-relaxed mb-6 sm:mb-8 font-normal drop-shadow-sm">
             I build modern web applications and AI-driven solutions that solve real-world problems. Passionate about technology, meaningful impact, and continuous learning.
           </p>
 
-          {/* Action CTA Buttons */}
-          <div className="hero-fade-up flex flex-wrap items-center gap-3.5 mb-7">
-            <a
+          {/* Action CTA Buttons with Magnetic Physics Attraction */}
+          <div className="hero-cta-group flex flex-wrap items-center gap-3 sm:gap-4 mb-7 sm:mb-9">
+            <MagneticButton
+              as="a"
               href="#projects"
               onClick={(e) => {
                 e.preventDefault();
-                scrollToId('projects');
+                scrollToId('projects', -60);
               }}
-              className="group relative inline-flex items-center gap-2.5 px-6 py-2.5 bg-[#111216] text-white text-xs sm:text-sm font-semibold rounded-full hover:bg-black transition-all shadow-sm hover:gap-3 overflow-hidden"
+              className="group relative inline-flex items-center gap-2.5 px-6 sm:px-7 py-3 sm:py-3.5 bg-[#F5F5F5] text-[#050505] text-xs sm:text-sm font-bold rounded-full hover:bg-white transition-all shadow-[0_4px_25px_rgba(0,0,0,0.5)] hover:shadow-[0_0_30px_rgba(0,217,255,0.45)] overflow-hidden border border-white/20 cursor-pointer"
               data-cursor-text="VIEW"
+              strength={0.25}
             >
               <span className="relative z-10">View My Work</span>
-              <ArrowRight className="w-3.5 h-3.5 relative z-10 group-hover:translate-x-0.5 transition-transform text-[#00D2FF]" />
-              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-0 bg-gradient-to-r from-[#00B4D8]/30 to-transparent transition-transform duration-500 ease-out" />
-            </a>
+              <ArrowRight className="w-3.5 h-3.5 relative z-10 group-hover:translate-x-1 transition-transform text-[#00D9FF]" />
+              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-0 bg-gradient-to-r from-[#00D9FF]/20 to-transparent transition-transform duration-500 ease-out" />
+            </MagneticButton>
 
-            <a
+            <MagneticButton
+              as="a"
               href={PERSONAL_INFO.resumePdf}
               download="S_Jagadeshwar_Reddy_Resume.pdf"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-[#111216] text-xs sm:text-sm font-semibold rounded-full border border-silver-light hover:border-[#25282F] hover:bg-[#F8F9FA] transition-all shadow-xs"
+              className="inline-flex items-center gap-2 px-5 sm:px-6 py-3 sm:py-3.5 bg-[#0A0A0A]/85 hover:bg-[#141414] backdrop-blur-md text-[#F5F5F5] text-xs sm:text-sm font-semibold rounded-full border border-white/10 hover:border-white/25 transition-all shadow-[0_4px_20px_rgba(0,0,0,0.4)] cursor-pointer group"
               data-cursor-text="RESUME"
+              strength={0.2}
             >
-              <Download className="w-3.5 h-3.5 text-[#616670]" />
+              <Download className="w-3.5 h-3.5 text-[#929292] group-hover:text-[#00D9FF] transition-colors" />
               <span>Download Resume</span>
-            </a>
+            </MagneticButton>
           </div>
 
-          {/* Compact Bottom Statistics Row */}
-          <div className="hero-fade-up flex items-center gap-4 sm:gap-6 pt-4 border-t border-silver-light/80 text-left">
+          {/* Refined Key Metrics HUD & Professional Availability */}
+          <div className="hero-metrics-bar pt-5 border-t border-white/[0.08] flex flex-wrap items-center gap-6 sm:gap-8">
             <div>
-              <div className="font-heading font-extrabold text-xl sm:text-2xl text-[#111216] leading-none">
-                5+
+              <div className="font-heading font-black text-2xl sm:text-3xl text-[#F5F5F5] leading-none">
+                05
               </div>
-              <div className="text-[11px] text-[#7B818C] font-medium uppercase tracking-wider mt-1">
+              <div className="text-[10.5px] text-[#929292] font-mono uppercase tracking-wider mt-1">
                 Projects
               </div>
             </div>
 
-            <div className="h-6 w-px bg-silver-light" />
+            <div className="h-7 w-px bg-white/10" />
 
             <div>
-              <div className="font-heading font-extrabold text-xl sm:text-2xl text-[#111216] leading-none">
+              <div className="font-heading font-black text-2xl sm:text-3xl text-[#F5F5F5] leading-none">
+                30+
+              </div>
+              <div className="text-[10.5px] text-[#929292] font-mono uppercase tracking-wider mt-1">
+                Core Skills
+              </div>
+            </div>
+
+            <div className="h-7 w-px bg-white/10" />
+
+            <div>
+              <div className="font-heading font-black text-2xl sm:text-3xl text-[#F5F5F5] leading-none">
                 12
               </div>
-              <div className="text-[11px] text-[#7B818C] font-medium uppercase tracking-wider mt-1">
+              <div className="text-[10.5px] text-[#929292] font-mono uppercase tracking-wider mt-1">
                 Certifications
               </div>
             </div>
 
-            <div className="h-6 w-px bg-silver-light" />
+            <div className="hidden sm:block h-7 w-px bg-white/10" />
 
-            <div>
-              <div className="font-heading font-extrabold text-xl sm:text-2xl text-[#111216] leading-none">
-                Full Stack
-              </div>
-              <div className="text-[11px] text-[#7B818C] font-medium uppercase tracking-wider mt-1">
-                Development
-              </div>
-            </div>
-
-            <div className="h-6 w-px bg-silver-light" />
-
-            <div>
-              <div className="font-heading font-extrabold text-xl sm:text-2xl text-[#111216] leading-none flex items-center gap-1">
-                <span>AI</span>
-                <Sparkles className="w-3 h-3 text-[#0096C7]" />
-              </div>
-              <div className="text-[11px] text-[#7B818C] font-medium uppercase tracking-wider mt-1">
-                Driven Solutions
-              </div>
+            {/* Subtle Live Availability Pill */}
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#0A0A0A]/80 backdrop-blur-md border border-white/10 text-[10.5px] font-mono text-[#00D9FF]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#00D9FF] animate-ping" />
+              <span>Available for Roles</span>
             </div>
           </div>
+
         </div>
-
-        {/* Right side spacer for desktop layout balance */}
-        <div className="hidden lg:block lg:col-span-5 xl:col-span-6 h-full relative" />
       </div>
 
-      {/* Far Right Section Index Pill (01..04) */}
-      <div className="hidden xl:flex absolute right-6 top-1/2 -translate-y-1/2 flex-col items-center gap-3 z-20 text-[10px] font-mono tracking-widest text-[#7B818C]/70">
-        <a 
-          href="#home" 
-          onClick={(e) => { e.preventDefault(); scrollToId('home'); }} 
-          className="text-black font-bold hover:text-black transition-colors"
-        >
-          01
-        </a>
-        <div className="w-px h-3 bg-black/20" />
-        <a 
-          href="#projects" 
-          onClick={(e) => { e.preventDefault(); scrollToId('projects'); }} 
-          className="hover:text-black transition-colors"
-        >
-          02
-        </a>
-        <div className="w-px h-3 bg-black/20" />
-        <a 
-          href="#about" 
-          onClick={(e) => { e.preventDefault(); scrollToId('about'); }} 
-          className="hover:text-black transition-colors"
-        >
-          03
-        </a>
-        <div className="w-px h-3 bg-black/20" />
-        <a 
-          href="#contact" 
-          onClick={(e) => { e.preventDefault(); scrollToId('contact'); }} 
-          className="hover:text-black transition-colors"
-        >
-          04
-        </a>
-      </div>
-
-      {/* Bottom Center Scroll Pill */}
-      <div className="relative z-20 flex justify-center -mb-1">
-        <a
-          href="#projects"
-          onClick={(e) => {
-            e.preventDefault();
-            scrollToId('projects');
-          }}
-          className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full border border-silver-light bg-white/90 backdrop-blur-sm text-[10px] font-mono uppercase tracking-widest text-[#616670] hover:text-[#111216] hover:border-[#111216] transition-all shadow-xs"
+      {/* =========================================================================
+          LAYER 03: MINIMAL BOTTOM SCROLL INDICATOR
+         ========================================================================= */}
+      <div 
+        ref={scrollIndicatorRef}
+        className="relative z-10 w-full flex justify-center pb-5 pointer-events-none"
+      >
+        <button
+          type="button"
+          onClick={() => scrollToId('projects', -60)}
+          className="pointer-events-auto inline-flex flex-col items-center gap-1 opacity-60 hover:opacity-100 transition-opacity cursor-pointer group"
           data-cursor-text="SCROLL"
+          aria-label="Scroll to Projects"
         >
-          <MousePointer className="w-2.5 h-2.5 animate-bounce text-[#0096C7]" />
-          <span>SCROLL DOWN</span>
-        </a>
+          <span className="text-[9px] font-mono tracking-[0.28em] text-[#929292] uppercase group-hover:text-[#00D9FF] transition-colors">
+            SCROLL TO EXPLORE
+          </span>
+          <ChevronDown className="w-3.5 h-3.5 text-[#00D9FF] animate-bounce" />
+        </button>
       </div>
+
     </section>
   );
 };
